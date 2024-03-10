@@ -1,4 +1,6 @@
-const { getAllBook, getDetailBook, addBook, updateBook, deleteBook } = require("./bookselfApi")
+const {
+    getAllBook, getDetailBook, addBook, updateBook, deleteBook,
+} = require('./bookselfApi');
 
 const route = [
     {
@@ -25,7 +27,7 @@ const route = [
         method: 'DELETE',
         path: '/books/{bookId}',
         handler: deleteBook,
-    }
-]
+    },
+];
 
-module.exports = route
+module.exports = route;

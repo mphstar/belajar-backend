@@ -6,10 +6,7 @@ const getAllBook = (request, h) => {
 
   let dataBooks = data;
 
-  if (name)
-    dataBooks = data.filter((it) =>
-      it.name.toLowerCase().includes(name.toLowerCase())
-    );
+  if (name) dataBooks = data.filter((it) => it.name.toLowerCase().includes(name.toLowerCase()));
 
   if (reading == 0) {
     dataBooks = data.filter((it) => it.reading === false);
@@ -32,14 +29,14 @@ const getAllBook = (request, h) => {
   return h
     .response(
       JSON.stringify({
-        status: "success",
+        status: 'success',
         data: {
           books: showData,
         },
-      })
+      }),
     )
     .code(200)
-    .header("content-type", "application/json");
+    .header('content-type', 'application/json');
 };
 
 const getDetailBook = (request, h) => {
@@ -51,25 +48,25 @@ const getDetailBook = (request, h) => {
     return h
       .response(
         JSON.stringify({
-          status: "fail",
-          message: "Buku tidak ditemukan",
-        })
+          status: 'fail',
+          message: 'Buku tidak ditemukan',
+        }),
       )
       .code(404)
-      .header("content-type", "application/json");
+      .header('content-type', 'application/json');
   }
 
   return h
     .response(
       JSON.stringify({
-        status: "success",
+        status: 'success',
         data: {
           book,
         },
-      })
+      }),
     )
     .code(200)
-    .header("content-type", "application/json");
+    .header('content-type', 'application/json');
 };
 
 const addBook = (request, h) => {
@@ -84,48 +81,48 @@ const addBook = (request, h) => {
     reading,
   } = request.payload;
 
-  let error = "";
+  let error = '';
 
   if (!name) {
-    error = "Gagal menambahkan buku. Mohon isi nama buku";
+    error = 'Gagal menambahkan buku. Mohon isi nama buku';
   }
   if (!year) {
-    error = "Gagal menambahkan buku. Mohon isi tahun buku";
+    error = 'Gagal menambahkan buku. Mohon isi tahun buku';
   }
   if (!author) {
-    error = "Gagal menambahkan buku. Mohon isi author buku";
+    error = 'Gagal menambahkan buku. Mohon isi author buku';
   }
   if (!summary) {
-    error = "Gagal menambahkan buku. Mohon isi summary buku";
+    error = 'Gagal menambahkan buku. Mohon isi summary buku';
   }
   if (!publisher) {
-    error = "Gagal menambahkan buku. Mohon isi publisher buku";
+    error = 'Gagal menambahkan buku. Mohon isi publisher buku';
   }
   if (!pageCount) {
-    error = "Gagal menambahkan buku. Mohon isi pageCount buku";
+    error = 'Gagal menambahkan buku. Mohon isi pageCount buku';
   }
   if (!readPage) {
-    error = "Gagal menambahkan buku. Mohon isi readPage buku";
+    error = 'Gagal menambahkan buku. Mohon isi readPage buku';
   }
   if (reading == null) {
-    error = "Gagal menambahkan buku. Mohon isi reading buku";
+    error = 'Gagal menambahkan buku. Mohon isi reading buku';
   }
 
   if (readPage > pageCount) {
     error =
-      "Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount";
+      'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount';
   }
 
-  if (error !== "") {
+  if (error !== '') {
     return h
       .response(
         JSON.stringify({
-          status: "fail",
+          status: 'fail',
           message: error,
-        })
+        }),
       )
       .code(400)
-      .header("content-type", "application/json");
+      .header('content-type', 'application/json');
   }
 
   const insertedAt = new Date().toISOString();
@@ -140,7 +137,7 @@ const addBook = (request, h) => {
     pageCount,
     readPage,
     finished: pageCount === readPage,
-    reading,
+    reading: false,
     insertedAt,
     updatedAt: insertedAt,
   };
@@ -150,15 +147,15 @@ const addBook = (request, h) => {
   return h
     .response(
       JSON.stringify({
-        status: "success",
-        message: "Buku berhasil ditambahkan",
+        status: 'success',
+        message: 'Buku berhasil ditambahkan',
         data: {
           bookId: newBook.id,
         },
-      })
+      }),
     )
     .code(201)
-    .header("content-type", "application/json");
+    .header('content-type', 'application/json');
 };
 
 const updateBook = (request, h) => {
@@ -170,12 +167,12 @@ const updateBook = (request, h) => {
     return h
       .response(
         JSON.stringify({
-          status: "fail",
-          message: "Gagal memperbarui buku. Id tidak ditemukan",
-        })
+          status: 'fail',
+          message: 'Gagal memperbarui buku. Id tidak ditemukan',
+        }),
       )
       .code(404)
-      .header("content-type", "application/json");
+      .header('content-type', 'application/json');
   }
 
   const {
@@ -189,48 +186,48 @@ const updateBook = (request, h) => {
     reading,
   } = request.payload;
 
-  let error = "";
+  let error = '';
 
   if (!name) {
-    error = "Gagal memperbarui buku. Mohon isi nama buku";
+    error = 'Gagal memperbarui buku. Mohon isi nama buku';
   }
   if (!year) {
-    error = "Gagal memperbarui buku. Mohon isi tahun buku";
+    error = 'Gagal memperbarui buku. Mohon isi tahun buku';
   }
   if (!author) {
-    error = "Gagal memperbarui buku. Mohon isi author buku";
+    error = 'Gagal memperbarui buku. Mohon isi author buku';
   }
   if (!summary) {
-    error = "Gagal memperbarui buku. Mohon isi summary buku";
+    error = 'Gagal memperbarui buku. Mohon isi summary buku';
   }
   if (!publisher) {
-    error = "Gagal memperbarui buku. Mohon isi publisher buku";
+    error = 'Gagal memperbarui buku. Mohon isi publisher buku';
   }
   if (!pageCount) {
-    error = "Gagal memperbarui buku. Mohon isi pageCount buku";
+    error = 'Gagal memperbarui buku. Mohon isi pageCount buku';
   }
   if (!readPage) {
-    error = "Gagal memperbarui buku. Mohon isi readPage buku";
+    error = 'Gagal memperbarui buku. Mohon isi readPage buku';
   }
   if (reading == null) {
-    error = "Gagal memperbarui buku. Mohon isi reading buku";
+    error = 'Gagal memperbarui buku. Mohon isi reading buku';
   }
 
   if (readPage > pageCount) {
     error =
-      "Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount";
+      'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount';
   }
 
-  if (error !== "") {
+  if (error !== '') {
     return h
       .response(
         JSON.stringify({
-          status: "fail",
+          status: 'fail',
           message: error,
-        })
+        }),
       )
       .code(400)
-      .header("content-type", "application/json");
+      .header('content-type', 'application/json');
   }
 
   book.name = name;
@@ -247,12 +244,12 @@ const updateBook = (request, h) => {
   return h
     .response(
       JSON.stringify({
-        status: "success",
-        message: "Buku berhasil diperbarui",
-      })
+        status: 'success',
+        message: 'Buku berhasil diperbarui',
+      }),
     )
     .code(200)
-    .header("content-type", "application/json");
+    .header('content-type', 'application/json');
 };
 
 const deleteBook = (request, h) => {
@@ -264,12 +261,12 @@ const deleteBook = (request, h) => {
     return h
       .response(
         JSON.stringify({
-          status: "fail",
-          message: "Buku gagal dihapus. Id tidak ditemukan",
-        })
+          status: 'fail',
+          message: 'Buku gagal dihapus. Id tidak ditemukan',
+        }),
       )
       .code(404)
-      .header("content-type", "application/json");
+      .header('content-type', 'application/json');
   }
 
   data.forEach((el, index) => {
@@ -281,12 +278,12 @@ const deleteBook = (request, h) => {
   return h
     .response(
       JSON.stringify({
-        status: "success",
-        message: "Buku berhasil dihapus",
-      })
+        status: 'success',
+        message: 'Buku berhasil dihapus',
+      }),
     )
     .code(200)
-    .header("content-type", "application/json");
+    .header('content-type', 'application/json');
 };
 
 module.exports = {
